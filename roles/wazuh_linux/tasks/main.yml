@@ -14,18 +14,18 @@
   apt_key:
     url: https://packages.wazuh.com/key/GPG-KEY-WAZUH
     state: present
-#  when: not service_exists
+  when: not service_exists
 
 - name: Add Wazuh repository
   apt_repository:
     repo: 'deb https://packages.wazuh.com/4.x/apt/ stable main'
     state: present
-#  when: not service_exists
+  when: not service_exists
 
 - name: Update apt cache
   apt:
     update_cache: yes
-#  when: not service_exists
+  when: not service_exists
 
 - name: Install Wazuh agent
   apt:
@@ -35,12 +35,12 @@
     WAZUH_MANAGER: '{{ wazuh_manager }}'
     WAZUH_AGENT_NAME: '{{ agent_name }}'
     WAZUH_AGENT_GROUP: '{{ agent_group }}'
-#  when: not service_exists
+  when: not service_exists
 
 - name: Reload systemd manager configuration
   systemd:
     daemon_reload: yes
-#  when: not service_exists
+  when: not service_exists
 
 - name: Enable and start Wazuh agent service
   systemd:
