@@ -20,6 +20,7 @@ ansible_winrm_read_timeout_sec=500
 web
 
 [services:vars]
+wazuh_manager=192.168.10.2
 agent_group=web
 
 ansible_user=manager
