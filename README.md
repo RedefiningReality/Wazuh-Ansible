@@ -3,7 +3,7 @@ Ansible roles and playbook to install Wazuh agents on Linux and Windows machines
 
 ## [Inventory](inventory)
 Update files in this directory to suit your needs. It currently has inventory files for [Game of Active Directory](https://orange-cyberdefense.github.io/GOAD/) and a custom "services" network.
-- [goad](invetory/goad) ⇒ Game of Active Directory on 192.168.10.0/24
+- [goad](inventory/goad) ⇒ Game of Active Directory on 192.168.10.0/24
 - [services](inventory/services) ⇒ custom services network on 192.168.30.0/24
 - [test](inventory/test) ⇒ a sample of hosts from goad and services for testing
 
