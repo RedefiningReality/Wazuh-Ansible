@@ -11,6 +11,8 @@ ssh
 mail
 
 [services:vars]
+agent_group=services
+
 ansible_user=manager
-ansible_password=S@lcianaszkot23
-ansible_become_password=S@lcianaszkot23
+ansible_password=Password123!
+ansible_become_password=Password123!
