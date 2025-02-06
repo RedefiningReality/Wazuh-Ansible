@@ -2,7 +2,7 @@
 Ansible roles and playbook to install Wazuh agents on Linux and Windows machines. Used to install Wazuh agents on VMs in Illinois Tech's cyber range.
 
 ⚠️ Be sure to update the .msi URL in [the defaults file for the wazuh_windows role](roles/wazuh_windows/defaults/main.yml) ⚠️  
-You can find it on [this page](https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html) of the Wazuh documentation.
+You can find an up-to-date URL on [this page](https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html) of the Wazuh documentation.
 
 ## [Inventory](inventory)
 Update files in this directory to suit your needs. It currently has inventory files for [Game of Active Directory](https://orange-cyberdefense.github.io/GOAD/) and a custom "services" network.
