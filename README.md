@@ -1,5 +1,5 @@
 # Ansible for Wazuh
-Ansible roles and playbook to install Wazuh agents on Linux and Windows machines. Used to install Wazuh agents in Illinois Tech's cyber range.
+Ansible roles and playbook to install Wazuh agents on Linux and Windows machines. Used to install Wazuh agents on VMs in Illinois Tech's cyber range.
 
 ## [Inventory](inventory)
 Update files in this directory to suit your needs. It currently has inventory files for [Game of Active Directory](https://orange-cyberdefense.github.io/GOAD/) and a custom "services" network.
