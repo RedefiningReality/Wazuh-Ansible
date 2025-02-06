@@ -2,16 +2,16 @@
   hosts: goad
   roles:
     - { role: 'wazuh_windows' }
-  vars:
-    wazuh_manager: "192.168.10.2"
-    agent_group: "goad"
+# These are specified in the inventory files, but alternatively, you could specify them here
+#  vars:
+#    wazuh_manager: "192.168.10.2"
+#    agent_group: "goad"
 
 - name: Install Wazuh Agent - Services
   hosts: services
   become: true
   roles:
     - { role: 'wazuh_linux' }
-  vars:
-    wazuh_manager: "192.168.30.2"
-    agent_group: "services"
-
+#  vars:
+#    wazuh_manager: "192.168.30.2"
+#    agent_group: "services"
