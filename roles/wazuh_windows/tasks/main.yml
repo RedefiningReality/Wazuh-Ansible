@@ -14,21 +14,21 @@
     dest: "{{wazuh_install_location}}/wazuh-agent"
   register: wazuh_agent_download
   until: wazuh_agent_download is succeeded
-#  when: not wazuh_agent_service.exists
+  when: not wazuh_agent_service.exists
 
 - name: Install Wazuh Agent
   ansible.windows.win_command: msiexec.exe /i "{{wazuh_install_location}}\wazuh-agent" /q WAZUH_MANAGER={{ wazuh_manager }} WAZUH_AGENT_NAME={{ agent_name }} WAZUH_AGENT_GROUP={{ agent_group }}
-  when: wazuh_agent_download is succeeded #and not wazuh_agent_service.exists
+  when: wazuh_agent_download is succeeded and not wazuh_agent_service.exists
 
 - name: Remove Wazuh Agent MSI package
   ansible.windows.win_file:
     path: "{{wazuh_install_location}}/wazuh-agent"
     state: absent
-  when: wazuh_agent_download is succeeded #and not wazuh_agent_service.exists
+  when: wazuh_agent_download is succeeded and not wazuh_agent_service.exists
 
 - name: Start Wazuh Agent service
   ansible.windows.win_service:
     name: WazuhSvc
     state: started
     start_mode: auto
-  when: wazuh_agent_download is succeeded #and not wazuh_agent_service.exists
+  when: wazuh_agent_download is succeeded and not wazuh_agent_service.exists
