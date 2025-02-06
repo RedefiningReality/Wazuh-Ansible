@@ -1,15 +1,13 @@
 [default]
-dc01 ansible_host=192.168.10.10 ansible_user=administrator@sevenkingdoms.local ansible_password=8dCT-DJjgScp agent_name=goad-dc01
-web ansible_host=192.168.30.10 agent_name=services-web
+dc01 ansible_host=192.168.10.10 ansible_user=administrator@sevenkingdoms.local ansible_password=8dCT-DJjgScp agent_name=dc01
+web ansible_host=192.168.30.10 agent_name=web
 
 [goad]
 dc01
 
 [goad:vars]
-; domain_name : folder inside ad/
-domain_name=GOAD
+agent_group=goad
 
-; winrm connection (windows)
 ansible_winrm_transport=ntlm
 ansible_user=notused
 ansible_password=notused
@@ -22,6 +20,8 @@ ansible_winrm_read_timeout_sec=500
 web
 
 [services:vars]
+agent_group=web
+
 ansible_user=manager
-ansible_password=S@lcianaszkot23
-ansible_become_password=S@lcianaszkot23
+ansible_password=Password123!
+ansible_become_password=Password123!
