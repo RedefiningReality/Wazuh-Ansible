@@ -1,0 +1,4 @@
+#!/bin/bash
+source activate
+ansible default -i inventory/inventory_services -m ping
+ansible default -i inventory/inventory_goad -m win_ping

@@ -1,0 +1,16 @@
+[default]
+web ansible_host=192.168.30.10 agent_name=web
+ftp ansible_host=192.168.30.11 agent_name=ftp
+ssh ansible_host=192.168.30.12 agent_name=ssh
+mail ansible_host=192.168.30.13 agent_name=mail
+
+[services]
+web
+ftp
+ssh
+mail
+
+[services:vars]
+ansible_user=manager
+ansible_password=S@lcianaszkot23
+ansible_become_password=S@lcianaszkot23

@@ -1,0 +1,3 @@
+#!/bin/bash
+source activate
+ansible-playbook -i inventory/test install.yml
