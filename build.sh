@@ -1,3 +1,2 @@
 #!/bin/bash
-source activate
 ansible-playbook -i inventory/goad -i inventory/services install.yml
