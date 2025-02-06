@@ -24,6 +24,7 @@ dc03
 srv03
 
 [goad:vars]
+wazuh_manager=192.168.10.2
 agent_group=goad
 
 ansible_winrm_transport=ntlm
