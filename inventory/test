@@ -22,7 +22,7 @@ web
 
 [services:vars]
 wazuh_manager=192.168.30.2
-agent_group=web
+agent_group=services
 
 ansible_user=manager
 ansible_password=Password123!
