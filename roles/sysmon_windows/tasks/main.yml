@@ -1,0 +1,65 @@
+- name: Check if Sysmon is Installed
+  win_service:
+    name: Sysmon64
+  register: sysmon_service
+  ignore_errors: true
+
+- name: Ensure Sysmon Directory Exists
+  win_file:
+    path: "{{ sysmon_install_location }}"
+    state: directory
+  when: not sysmon_service.exists
+
+- name: Download Sysmon ZIP
+  win_get_url:
+    url: https://download.sysinternals.com/files/Sysmon.zip
+    dest: "{{ sysmon_install_location }}\\Sysmon.zip"
+  when: not sysmon_service.exists
+
+- name: Extract Sysmon ZIP
+  win_unzip:
+    src: "{{ sysmon_install_location }}\\Sysmon.zip"
+    dest: "{{ sysmon_install_location }}"
+    delete_archive: yes
+  when: not sysmon_service.exists
+
+- name: Download Sysmon Configuration
+  win_get_url:
+    url: "{{ sysmon_config }}"
+    dest: "{{ sysmon_install_location }}\\sysmonconfig.xml"
+  when: not sysmon_service.exists
+
+- name: Install Sysmon with Configuration
+  win_command: "{{ sysmon_install_location }}\\Sysmon64.exe -accepteula -i {{ sysmon_install_location }}\\sysmonconfig.xml"
+  args:
+    creates: 'C:\Windows\System32\drivers\SysmonDrv.sys'
+  when: not sysmon_service.exists
+
+- name: Remove Sysmon Installation Files
+  win_file:
+    path: "{{ sysmon_install_location }}"
+    state: absent
+  when: not sysmon_service.exists
+
+- name: Verify Sysmon Service is Running
+  win_service:
+    name: Sysmon64
+    state: started
+    start_mode: auto
+
+- name: Ensure Wazuh Forwards Sysmon Logs
+  win_lineinfile:
+    path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+    insertbefore: "</ossec_config>"
+    line: |
+      <localfile>
+        <location>Microsoft-Windows-Sysmon/Operational</location>
+        <log_format>eventchannel</log_format>
+      </localfile>
+    state: present
+
+- name: Restart Wazuh
+  ansible.windows.win_service:
+    name: WazuhSvc
+    state: restarted
+    start_mode: auto

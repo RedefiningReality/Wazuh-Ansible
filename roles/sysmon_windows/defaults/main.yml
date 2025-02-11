@@ -1,0 +1,2 @@
+sysmon_install_location: "c:\\"
+sysmon_config: "https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml"
