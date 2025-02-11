@@ -20,7 +20,7 @@ Update files in this directory to suit your needs. It currently has inventory fi
 The bread and butter of this repo: roles for installing Wazuh agents on Linux and Windows. Feel free to use these in your own playbook.
 - [wazuh_linux](roles/wazuh_linux) ⇒ installs Wazuh agent on Linux
 - [wazuh_windows](roles/wazuh_windows) ⇒ installs Wazuh agent on Windows
-- [sysmon_windows](roles/wazuh_windows) ⇒ installs Sysmon on Windows and configures Sysmon logging for Wazuh
+- [sysmon_windows](roles/sysmon_windows) ⇒ installs Sysmon on Windows and configures Sysmon logging for Wazuh
   - Uses the [SwiftOnSecurity Sysmon config](https://github.com/SwiftOnSecurity/sysmon-config) by default but you can change this in [the defaults file](roles/sysmon_windows/defaults/main.yml)
 ### Variables
 - **wazuh_manager** ⇒ Wazuh manager server to connect to
