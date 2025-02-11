@@ -50,6 +50,7 @@
 - name: Ensure Wazuh Forwards Sysmon Logs
   win_lineinfile:
     path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+    regexp: 'Microsoft-Windows-Sysmon/Operational'
     insertbefore: "</ossec_config>"
     line: |
       <localfile>
