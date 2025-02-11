@@ -2,7 +2,7 @@
 Ansible roles and playbook to install Wazuh agents on Linux and Windows machines. Used to install Wazuh agents on VMs in Illinois Tech's cyber range.
 
 **NOT FOR PRODUCTION USE**  
-I did not necessarily follow Ansible best practices nor account for all edge cases, so it's worth giving the tasks a manual review before you blindly running this in your environment. For example:
+I did not necessarily follow Ansible best practices nor account for all edge cases, so it's worth giving the tasks a manual review before running this in your environment. For example:
 - the wazuh_linx role assumes your Linux distro uses apt for package management
 - the sysmon_windows role assumes you're using 64-bit versions of Windows
 
