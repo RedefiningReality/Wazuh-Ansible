@@ -2,6 +2,7 @@
   hosts: goad
   roles:
     - { role: 'wazuh_windows' }
+    - { role: 'sysmon_windows' }
 # These are specified in the inventory files, but alternatively, you could specify them here
 #  vars:
 #    wazuh_manager: "192.168.10.2"
