@@ -50,7 +50,6 @@
 - name: Ensure Wazuh Forwards Sysmon Logs
   win_lineinfile:
     path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
-    regexp: 'Microsoft-Windows-Sysmon/Operational'
     insertbefore: "</ossec_config>"
     line: |
       <localfile>
@@ -58,6 +57,7 @@
         <log_format>eventchannel</log_format>
       </localfile>
     state: present
+  when: not sysmon_service.exists
 
 - name: Restart Wazuh
   ansible.windows.win_service:
