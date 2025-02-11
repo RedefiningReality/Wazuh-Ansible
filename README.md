@@ -5,6 +5,7 @@ Ansible roles and playbook to install Wazuh agents on Linux and Windows machines
 I did not necessarily follow Ansible best practices nor account for all edge cases, so it's worth giving the tasks a manual review before running this in your environment. For example:
 - the wazuh_linx role assumes your Linux distro uses apt for package management
 - the sysmon_windows role assumes you're using 64-bit versions of Windows
+- the sysmon_windows role restarts the Wazuh agent in all cases - ideally, it should call a handler to only restart the service when the config file was changed
 
 ⚠️ Be sure to update the .msi URL in [the defaults file for the wazuh_windows role](roles/wazuh_windows/defaults/main.yml) ⚠️  
 You can find an up-to-date URL on [this page](https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html) of the Wazuh documentation.
