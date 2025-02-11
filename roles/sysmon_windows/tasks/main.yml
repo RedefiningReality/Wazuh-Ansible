@@ -12,7 +12,7 @@
 
 - name: Download Sysmon ZIP
   win_get_url:
-    url: https://download.sysinternals.com/files/Sysmon.zip
+    url: "https://download.sysinternals.com/files/Sysmon.zip"
     dest: "{{ sysmon_install_location }}\\Sysmon.zip"
   when: not sysmon_service.exists
 
