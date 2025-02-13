@@ -47,6 +47,17 @@
     state: started
     start_mode: auto
 
+- name: Check if Wazuh Forwards Sysmon Logs
+  win_find:
+  paths: 'C:\Program Files (x86)\ossec-agent\'
+  patterns: ossec.conf
+  contains: |
+    <localfile>
+      <log_format>eventchannel</log_format>
+      <location>Microsoft-Windows-Sysmon/Operational</location>
+    </localfile>
+  register: xml_check
+
 - name: Ensure Wazuh Forwards Sysmon Logs
   win_lineinfile:
     path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
@@ -57,10 +68,11 @@
         <log_format>eventchannel</log_format>
       </localfile>
     state: present
-  when: not sysmon_service.exists
+  when: not xml_check.matched
+  notify: Restart Wazuh Agent
 
-- name: Restart Wazuh
+- name: Start Wazuh Agent
   ansible.windows.win_service:
     name: WazuhSvc
-    state: restarted
+    state: started
     start_mode: auto

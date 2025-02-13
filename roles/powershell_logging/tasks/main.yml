@@ -1,0 +1,87 @@
+- name: Enable PowerShell Module Logging
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ModuleLogging
+    name: EnableModuleLogging
+    data: 1
+    type: dword
+    state: present
+  register: a
+
+- name: Configure Module Names for Logging
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ModuleLogging\ModuleNames
+    name: "*"
+    data: "*"
+    type: string
+    state: present
+  register: b
+
+- name: Enable PowerShell Script Block Logging
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+    name: EnableScriptBlockLogging
+    data: 1
+    type: dword
+    state: present
+  register: c
+
+- name: Enable PowerShell Script Block Invocation Logging
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+    name: EnableScriptBlockInvocationLogging
+    data: 1
+    type: dword
+    state: present
+  register: d
+
+- name: Enable PowerShell Transcription Logging
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows\PowerShell\Transcription
+    name: EnableTranscripting
+    data: 1
+    type: dword
+    state: present
+  register: e
+
+- name: Enable PowerShell Transcription Invocation Header
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows\PowerShell\Transcription
+    name: IncludeInvocationHeader
+    data: 1
+    type: dword
+    state: present
+  register: f
+
+- name: Force Group Policy Update
+  win_command: gpupdate /force
+  when: a.changed or b.changed or c.changed or d.changed or e.changed or f.changed
+
+- name: Check if Wazuh Forwards PowerShell Logs
+  win_find:
+  paths: 'C:\Program Files (x86)\ossec-agent\'
+  patterns: ossec.conf
+  contains: |
+    <localfile>
+      <log_format>eventchannel</log_format>
+      <location>Microsoft-Windows-PowerShell/Operational</location>
+    </localfile>
+  register: xml_check
+
+- name: Ensure Wazuh Forwards PowerShell Logs
+  win_lineinfile:
+    path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+    insertbefore: "</ossec_config>"
+    line: |
+      <localfile>
+        <location>Microsoft-Windows-PowerShell/Operational</location>
+        <log_format>eventchannel</log_format>
+      </localfile>
+    state: present
+  when: not xml_check.matched
+  notify: Restart Wazuh Agent
+
+- name: Start Wazuh Agent
+  ansible.windows.win_service:
+    name: WazuhSvc
+    state: started
+    start_mode: auto
