@@ -71,3 +71,14 @@
 
 - name: Reload auditd rules
   command: augenrules --load
+
+- name: Ensure Wazuh Forwards Auditd Logs
+  blockinfile:
+    path: /var/ossec/etc/ossec.conf
+    insertbefore: "</ossec_config>"
+    block: |
+      <localfile>
+          <location>/var/log/audit/audit.log</location>
+          <log_format>audit</log_format>
+      </localfile>
+  notify: Restart Wazuh Agent
