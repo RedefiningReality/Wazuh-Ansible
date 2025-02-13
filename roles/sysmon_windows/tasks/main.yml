@@ -62,7 +62,7 @@
         <log_format>eventchannel</log_format>
       </localfile>
     state: present
-  when: config == ''
+  when: config.stdout == ''
   notify: Restart Wazuh Agent
 
 - name: Start Wazuh Agent
