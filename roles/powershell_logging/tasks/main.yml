@@ -55,17 +55,18 @@
 - name: Force Group Policy Update
   win_command: gpupdate /force
   when: a.changed or b.changed or c.changed or d.changed or e.changed or f.changed
+  changed_when: true
 
 - name: Check if Wazuh Forwards PowerShell Logs
   win_find:
-  paths: 'C:\Program Files (x86)\ossec-agent\'
-  patterns: ossec.conf
-  contains: |
-    <localfile>
-      <log_format>eventchannel</log_format>
-      <location>Microsoft-Windows-PowerShell/Operational</location>
-    </localfile>
-  register: xml_check
+    paths: 'C:\Program Files (x86)\ossec-agent\'
+    patterns: ossec.conf
+    contains: |
+      <localfile>
+        <log_format>eventchannel</log_format>
+        <location>Microsoft-Windows-PowerShell/Operational</location>
+      </localfile>
+    register: xml_check
 
 - name: Ensure Wazuh Forwards PowerShell Logs
   win_lineinfile:
