@@ -76,6 +76,7 @@
   blockinfile:
     path: /var/ossec/etc/ossec.conf
     insertbefore: "</ossec_config>"
+    marker: ""
     block: |
       <localfile>
           <location>/var/log/audit/audit.log</location>
