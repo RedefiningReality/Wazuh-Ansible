@@ -59,6 +59,7 @@
 
 - name: Check if Wazuh Forwards PowerShell Logs
   win_shell: findstr Microsoft-Windows-PowerShell 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+  ignore_errors: true
   register: config
 
 - name: Ensure Wazuh Forwards PowerShell Logs

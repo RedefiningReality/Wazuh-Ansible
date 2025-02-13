@@ -49,6 +49,7 @@
 
 - name: Check if Wazuh Forwards Sysmon Logs
   win_shell: findstr Microsoft-Windows-Sysmon 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+  ignore_errors: true
   register: config
 
 - name: Ensure Wazuh Forwards Sysmon Logs
