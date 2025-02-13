@@ -58,11 +58,7 @@
   changed_when: true
 
 - name: Check if Wazuh Forwards PowerShell Logs
-  win_lineinfile:
-    path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
-    line: <location>Microsoft-Windows-PowerShell/Operational</location>
-    state: present
-    check_mode: yes
+  win_shell: findstr Microsoft-Windows-PowerShell 'C:\Program Files (x86)\ossec-agent\ossec.conf'
   register: config
 
 - name: Ensure Wazuh Forwards PowerShell Logs
@@ -75,7 +71,7 @@
         <log_format>eventchannel</log_format>
       </localfile>
     state: present
-  when: not config.found
+  when: config == ''
   notify: Restart Wazuh Agent
 
 - name: Start Wazuh Agent

@@ -48,11 +48,7 @@
     start_mode: auto
 
 - name: Check if Wazuh Forwards Sysmon Logs
-  win_lineinfile:
-    path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
-    line: <location>Microsoft-Windows-Sysmon/Operational</location>
-    state: present
-    check_mode: yes
+  win_shell: findstr Microsoft-Windows-Sysmon 'C:\Program Files (x86)\ossec-agent\ossec.conf'
   register: config
 
 - name: Ensure Wazuh Forwards Sysmon Logs
@@ -65,7 +61,7 @@
         <log_format>eventchannel</log_format>
       </localfile>
     state: present
-  when: not config.found
+  when: config == ''
   notify: Restart Wazuh Agent
 
 - name: Start Wazuh Agent
