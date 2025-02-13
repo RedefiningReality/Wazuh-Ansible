@@ -1,0 +1,73 @@
+- name: Install auditd
+  apt:
+    name: auditd
+    state: present
+
+- name: Enable auditd service
+  systemd:
+    name: auditd
+    enabled: yes
+    state: started
+
+- name: Monitor executed 32-bit commands
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-a always,exit -F arch=b32 -S execve -k commands"
+    create: yes
+
+- name: Monitor executed 64-bit commands
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-a always,exit -F arch=b64 -S execve -k commands"
+    create: yes
+
+- name: Monitor executed shells 1
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /bin/sh -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 2
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /usr/bin/sh -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 3
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /bin/bash -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 4
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /usr/bin/bash -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 5
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /bin/rbash -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 6
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /usr/bin/rbash -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 7
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /bin/dash -p x -k execution"
+    create: yes
+
+- name: Monitor executed shells 8
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: "-w /usr/bin/dash -p x -k execution"
+    create: yes
+
+- name: Reload auditd rules
+  command: augenrules --load
