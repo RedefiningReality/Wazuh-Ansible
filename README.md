@@ -22,6 +22,7 @@ The bread and butter of this repo: roles for installing Wazuh agents on Linux an
 - [wazuh_windows](roles/wazuh_windows) ⇒ installs Wazuh agent on Windows
 - [sysmon_windows](roles/sysmon_windows) ⇒ installs Sysmon on Windows and configures Sysmon logging for Wazuh
   - Uses the [SwiftOnSecurity Sysmon config](https://github.com/SwiftOnSecurity/sysmon-config) by default but you can change this in [the defaults file](roles/sysmon_windows/defaults/main.yml)
+- [defender_logging](roles/defender_logging) ⇒ forwards Windows Defender logs to Wazuh
 - [powershell_logging](roles/powershell_logging) ⇒ enables PowerShell logging on Windows and forwards logs to Wazuh
 - [auditd_logging](roles/auditd_logging) ⇒ logs all commands and shell execution and forwards logs to Wazuh
 ### Variables

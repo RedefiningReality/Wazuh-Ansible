@@ -1,0 +1,18 @@
+- name: Check if Wazuh Forwards Defender Logs
+  win_shell: findstr 'Microsoft-Windows-Windows Defender' 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+  changed_when: false
+  ignore_errors: true
+  register: config
+
+- name: Ensure Wazuh Forwards Defender Logs
+  win_lineinfile:
+    path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+    insertbefore: "</ossec_config>"
+    line: |
+      <localfile>
+        <location>Microsoft-Windows-Windows Defender/Operational</location>
+        <log_format>eventchannel</log_format>
+      </localfile>
+    state: present
+  when: config.stdout == ''
+  notify: Restart Wazuh Agent

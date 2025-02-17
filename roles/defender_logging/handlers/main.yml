@@ -1,0 +1,5 @@
+- name: Restart Wazuh Agent
+  ansible.windows.win_service:
+    name: WazuhSvc
+    state: restarted
+    start_mode: auto

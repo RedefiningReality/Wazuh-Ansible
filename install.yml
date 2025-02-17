@@ -3,6 +3,7 @@
   roles:
     - { role: 'wazuh_windows' }
     - { role: 'sysmon_windows' }
+    - { role: 'defender_logging' }
     - { role: 'powershell_logging' }
 # These are specified in the inventory files, but alternatively, you could specify them here
 #  vars:
