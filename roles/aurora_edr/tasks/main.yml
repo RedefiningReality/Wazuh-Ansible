@@ -1,0 +1,75 @@
+- name: Check if Aurora is Installed
+  win_service:
+    name: aurora-agent
+  register: aurora_service
+  ignore_errors: true
+
+- name: Ensure Aurora Directory Exists
+  win_file:
+    path: "{{ aurora_install_location }}"
+    state: directory
+  when: not aurora_service.exists
+
+- name: Download Aurora ZIP
+  win_get_url:
+    url: "{{ aurora_download }}"
+    dest: "{{ aurora_install_location }}\\Aurora.zip"
+  when: not aurora_service.exists
+
+- name: Extract Aurora ZIP
+  win_unzip:
+    src: "{{ aurora_install_location }}\\Aurora.zip"
+    dest: "{{ aurora_install_location }}"
+    delete_archive: yes
+  when: not aurora_service.exists
+
+- name: Upload Aurora License
+  win_copy:
+    src: "{{ aurora_license }}"
+    dest: "{{ aurora_install_location }}\\aurora-license.lic"
+  when: not aurora_service.exists
+
+- name: Install Aurora with Configuration
+  win_command:
+    chdir: "{{ aurora_install_location }}"
+    cmd: 'aurora-agent-64.exe --install --dashboard -c agent-config-standard.yml --json --logfile "C:\Program Files\Aurora-Agent\aurora_alerts.json.log"'
+  args:
+    creates: 'C:\Program Files\Aurora-Agent\aurora-agent-64.exe'
+  when: not aurora_service.exists
+
+- name: Remove Aurora Installation Files
+  win_file:
+    path: "{{ aurora_install_location }}"
+    state: absent
+  when: not aurora_service.exists
+
+- name: Verify Aurora Service is Running
+  win_service:
+    name: aurora-agent
+    state: started
+    start_mode: auto
+
+- name: Check if Wazuh Forwards Aurora Logs
+  win_shell: findstr aurora_alerts.json.log 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+  changed_when: false
+  ignore_errors: true
+  register: config
+
+- name: Ensure Wazuh Forwards Aurora Logs
+  win_lineinfile:
+    path: 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+    insertbefore: "</ossec_config>"
+    line: |
+      <localfile>
+        <location>C:\Program Files\Aurora-Agent\aurora_alerts.json.log</location>
+        <log_format>json</log_format>
+      </localfile>
+    state: present
+  when: config.stdout == ''
+  notify: Restart Wazuh Agent
+
+- name: Start Wazuh Agent
+  ansible.windows.win_service:
+    name: WazuhSvc
+    state: started
+    start_mode: auto

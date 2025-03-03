@@ -4,6 +4,7 @@
     - { role: 'wazuh_windows' }
     - { role: 'sysmon_windows' }
     - { role: 'powershell_logging' }
+    - { role: 'aurora_edr' }
 # These are specified in the inventory files, but alternatively, you could specify them here
 #  vars:
 #    wazuh_manager: "192.168.10.2"

@@ -1,0 +1,3 @@
+aurora_download: "https://update1.nextron-systems.com/getupdate.php?product=aurora-agent-lite-win"
+aurora_license: 'aurora-license.lic'
+aurora_install_location: 'C:\Aurora'
