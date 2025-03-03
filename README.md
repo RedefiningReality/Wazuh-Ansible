@@ -24,7 +24,8 @@ The bread and butter of this repo: roles for installing Wazuh agents on Linux an
   - Uses the [SwiftOnSecurity Sysmon config](https://github.com/SwiftOnSecurity/sysmon-config) by default but you can change this in [the defaults file](roles/sysmon_windows/defaults/main.yml)
 - [defender_logging](roles/defender_logging) ⇒ forwards Windows Defender logs to Wazuh
 - [aurora_edr](roles/aurora_edr) ⇒ installs [Aurora Lite](https://aurora-agent-manual.nextron-systems.com/en/latest/usage/what-is-aurora.html) (free EDR) and forwards logs to Wazuh
-  - Be sure to replace [aurora-license.lic](roles/aurora_edr/files/aurora-license.lic) in roles->aurora_edr->files with your license! You can get a free license [here](https://www.nextron-systems.com/aurora/#get-aurora-lite).
+  - Be sure to replace [aurora-license.lic](roles/aurora_edr/files/aurora-license.lic) in roles->aurora_edr->files with your license! You can get a free license [here](https://www.nextron-systems.com/aurora/#get-aurora-lite)
+  - You may need to manually disable Windows Defender real-time protection or create an exclusion prior to installing Aurora EDR - see [official documentation](https://aurora-agent-manual.nextron-systems.com/en/latest/usage/installation.html#define-an-antivirus-edr-exclusion) for more details
 - [powershell_logging](roles/powershell_logging) ⇒ enables PowerShell logging on Windows and forwards logs to Wazuh
 - [auditd_logging](roles/auditd_logging) ⇒ logs all commands and shell execution and forwards logs to Wazuh
 ### Variables
