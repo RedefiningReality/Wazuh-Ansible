@@ -1,6 +1,5 @@
 # Ansible for Wazuh
-Ansible roles and playbook to install Wazuh agents on Linux and Windows machines. Used to install Wazuh agents on VMs in Illinois Tech's cyber range.   
-Consider checking out Splunk's attack_range GitHub repo for other [fantastic Ansible roles](https://github.com/splunk/attack_range/tree/develop/terraform/ansible/roles).
+Ansible roles and playbook to install Wazuh agents on Linux and Windows machines. Used to install Wazuh agents on VMs in Illinois Tech's cyber range. Consider checking out Splunk's attack_range GitHub repo for other [fantastic Ansible roles](https://github.com/splunk/attack_range/tree/develop/terraform/ansible/roles).
 
 **NOT FOR PRODUCTION USE**  
 I did not necessarily follow Ansible best practices nor account for all edge cases, so it's worth giving the tasks a manual review before running this in your environment. For example:
