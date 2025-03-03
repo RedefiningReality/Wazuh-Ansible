@@ -5,7 +5,7 @@ Ansible roles and playbook to install Wazuh agents on Linux and Windows machines
 I did not necessarily follow Ansible best practices nor account for all edge cases, so it's worth giving the tasks a manual review before running this in your environment. For example:
 - the wazuh_linx role assumes your Linux distro uses apt for package management
 - the sysmon_windows role assumes you're using 64-bit versions of Windows
-- ~~the sysmon_windows role restarts the Wazuh agent in all cases - ideally, it should call a handler to only restart the agent when the config file was changed~~ - this bothered me enough that I fixed it
+- (bug) the auditd_logging role modifies the ossec.conf file every time it is run
 
 ⚠️ Be sure to update the .msi URL in [the defaults file for the wazuh_windows role](roles/wazuh_windows/defaults/main.yml) ⚠️  
 You can find an up-to-date URL on [this page](https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html) of the Wazuh documentation.
@@ -22,6 +22,9 @@ The bread and butter of this repo: roles for installing Wazuh agents on Linux an
 - [wazuh_windows](roles/wazuh_windows) ⇒ installs Wazuh agent on Windows
 - [sysmon_windows](roles/sysmon_windows) ⇒ installs Sysmon on Windows and configures Sysmon logging for Wazuh
   - Uses the [SwiftOnSecurity Sysmon config](https://github.com/SwiftOnSecurity/sysmon-config) by default but you can change this in [the defaults file](roles/sysmon_windows/defaults/main.yml)
+- [defender_logging](roles/defender_logging) ⇒ forwards Windows Defender logs to Wazuh
+- [powershell_logging](roles/powershell_logging) ⇒ enables PowerShell logging on Windows and forwards logs to Wazuh
+- [auditd_logging](roles/auditd_logging) ⇒ logs all commands and shell execution and forwards logs to Wazuh
 ### Variables
 - **wazuh_manager** ⇒ Wazuh manager server to connect to
 - **agent_name** ⇒ name for host in Wazuh (specify for each host in inventory)

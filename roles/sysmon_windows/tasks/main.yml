@@ -65,9 +65,3 @@
     state: present
   when: config.stdout == ''
   notify: Restart Wazuh Agent
-
-- name: Start Wazuh Agent
-  ansible.windows.win_service:
-    name: WazuhSvc
-    state: started
-    start_mode: auto
