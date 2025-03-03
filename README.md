@@ -4,7 +4,7 @@ Ansible roles and playbook to install Wazuh agents on Linux and Windows machines
 **NOT FOR PRODUCTION USE**  
 I did not necessarily follow Ansible best practices nor account for all edge cases, so it's worth giving the tasks a manual review before running this in your environment. For example:
 - the wazuh_linx role assumes your Linux distro uses apt for package management
-- the sysmon_windows role assumes you're using 64-bit versions of Windows
+- the sysmon_windows and aurora_edr roles assume you're using 64-bit versions of Windows
 - (bug) the auditd_logging role modifies the ossec.conf file every time it is run
 
 ⚠️ Be sure to update the .msi URL in [the defaults file for the wazuh_windows role](roles/wazuh_windows/defaults/main.yml) ⚠️  
